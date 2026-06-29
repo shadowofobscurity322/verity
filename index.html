@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verity</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+
+    // ⚠️ ISI FIREBASE CONFIG UNTUK AUTH (Email + Google OAuth)
+    const authConfig = {
+      apiKey: "AIzaSyCbNf4VzetT-ZJhW-vKJmxmQkUU5rRQBgs",
+      authDomain: "verity-login-847e7.firebaseapp.com",
+      projectId: "verity-login-847e7",
+      storageBucket: "verity-login-847e7.firebasestorage.app",
+      messagingSenderId: "699745468738",
+      appId: "1:699745468738:web:9267a3ca7a9a6717d708db",
+    };
+
+    // ⚠️ ISI FIREBASE CONFIG UNTUK FIRESTORE (Database)
+    const firestoreConfig = {
+      apiKey: "AIzaSyD43inbOa0ljSpCTsU_6RJyHqZRWT3UK3E",
+      authDomain: "verity1.firebaseapp.com",
+      projectId: "verity1",
+      storageBucket: "verity1.firebasestorage.app",
+      messagingSenderId: "534847093729",
+      appId: "1:534847093729:web:094511db89d0bba1d3b0a0",
+    };
+
+    const authApp = initializeApp(authConfig, "auth");
+    const app = initializeApp(firestoreConfig, "db");
+    const auth = getAuth(authApp);
+    const provider = new GoogleAuthProvider();
+
+    window.firebaseAuth = auth;
+    window.googleProvider = provider;
+    window.firebaseSignIn = signInWithEmailAndPassword;
+    window.firebaseSignUp = createUserWithEmailAndPassword;
+    window.firebaseGoogleSignIn = signInWithPopup;
+    window.firebaseSignOut = signOut;
+    window.firebaseOnAuthStateChanged = onAuthStateChanged;
+
+    // Cek auth state
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.currentUser = user;
+        showApp(user);
+      } else {
+        window.currentUser = null;
+        showLogin();
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <!-- LOGIN PAGE -->
+  <div id="loginPage" class="page hidden">
+    <div class="login-container">
+      <div class="verity-logo">🙂</div>
+      <h1 class="login-title">Verity</h1>
+      <p class="login-subtitle">Hello! I'm Verity, your personal helper friend!</p>
+
+      <div class="login-form">
+        <input type="email" id="emailInput" placeholder="Email" class="input-field">
+        <input type="password" id="passwordInput" placeholder="Password" class="input-field">
+
+        <button class="btn btn-primary" onclick="handleEmailLogin()">Login</button>
+        <button class="btn btn-secondary" onclick="handleEmailRegister()">Register</button>
+        <div class="divider">or</div>
+        <button class="btn btn-google" onclick="handleGoogleLogin()">
+          <span>Continue with Google</span>
+        </button>
+      </div>
+
+      <p class="login-error hidden" id="loginError"></p>
+    </div>
+  </div>
+
+  <!-- MENU PAGE -->
+  <div id="menuPage" class="page hidden">
+    <div class="menu-bg" id="menuBg"></div>
+    <div class="menu-container">
+      <div class="menu-verity">🙂</div>
+      <h2 id="menuGreeting">Hello!</h2>
+      <p id="menuSubtitle">Ask me anything. I know everything.</p>
+      <button class="btn btn-primary" onclick="startChat()">Talk to Verity</button>
+    </div>
+  </div>
+
+  <!-- CHAT PAGE -->
+  <div id="chatPage" class="page hidden">
+    <!-- Verity 3D Model (75% layar) -->
+    <div id="verityContainer" class="verity-container">
+      <div id="verity3d"></div>
+      <!-- Map overlay fase 3-4 -->
+      <div id="mapOverlay" class="map-overlay hidden">
+        <img id="mapImg" src="" alt="">
+      </div>
+    </div>
+
+    <!-- Chat Panel (25% layar) -->
+    <div id="chatPanel" class="chat-panel">
+      <div class="chat-header">
+        <span class="chat-title">Verity</span>
+        <span id="phaseIndicator" class="phase-indicator"></span>
+        <button class="logout-btn" onclick="handleLogout()">✕</button>
+      </div>
+
+      <div id="chatHistory" class="chat-history"></div>
+
+      <div class="chat-input-area">
+        <input
+          type="text"
+          id="chatInput"
+          placeholder="Ask me anything..."
+          onkeypress="handleKeyPress(event)"
+        >
+        <button onclick="sendMessage()" class="send-btn">➤</button>
+      </div>
+    </div>
+
+    <!-- Glitch overlay fase 4 -->
+    <div id="glitchOverlay" class="glitch-overlay hidden"></div>
+  </div>
+
+  <!-- INCOMING CALL UI -->
+  <div id="callUI" class="call-ui hidden">
+    <div class="call-container">
+      <div class="call-avatar">🙂</div>
+      <p class="call-name" id="callName">Verity</p>
+      <p class="call-subtitle">Incoming call...</p>
+      <div class="call-buttons">
+        <button class="call-btn decline" onclick="declineCall()">✕</button>
+        <button class="call-btn accept" onclick="acceptCall()">✓</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js" type="module"></script>
+</body>
+</html>

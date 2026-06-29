@@ -1,0 +1,721 @@
+/* =====================================================
+   VERITY — style.css
+   Palette:
+     --void:       #050508   (background utama)
+     --surface:    #0e0e14   (card/panel)
+     --border:     #1c1c28   (divider)
+     --gold-1:     #FFD700   (fase 1 — ceria, terang)
+     --gold-2:     #CCA800   (fase 2 — redup)
+     --gold-3:     #8B7000   (fase 3 — gelap)
+     --gold-4:     #3D3000   (fase 4 — hampir mati)
+     --text:       #E8E8E8
+     --text-dim:   #666680
+     --danger:     #FF3B3B
+   Font: 'Share Tech Mono' (monospace, sci-fi) + system-ui body
+===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+/* =====================
+   RESET & BASE
+===================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --void: #050508;
+  --surface: #0e0e14;
+  --border: #1c1c28;
+  --gold-1: #FFD700;
+  --gold-2: #CCA800;
+  --gold-3: #8B7000;
+  --gold-4: #3D3000;
+  --text: #E8E8E8;
+  --text-dim: #666680;
+  --danger: #FF3B3B;
+  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+  --font-ui: system-ui, -apple-system, sans-serif;
+  --phase-color: var(--gold-1);
+  --transition: 0.4s ease;
+}
+
+html, body {
+  height: 100%;
+  background: var(--void);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.6;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =====================
+   PAGE SYSTEM
+===================== */
+.page {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page.hidden {
+  display: none;
+}
+
+/* =====================
+   LOGIN PAGE
+===================== */
+#loginPage {
+  background: var(--void);
+  flex-direction: column;
+}
+
+/* Subtle scanline overlay */
+#loginPage::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 215, 0, 0.015) 2px,
+    rgba(255, 215, 0, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.login-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 360px;
+  padding: 48px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.verity-logo {
+  font-size: 48px;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 0 16px rgba(255, 215, 0, 0.4));
+  animation: pulse-logo 3s ease-in-out infinite;
+}
+
+@keyframes pulse-logo {
+  0%, 100% { filter: drop-shadow(0 0 16px rgba(255, 215, 0, 0.4)); }
+  50%       { filter: drop-shadow(0 0 32px rgba(255, 215, 0, 0.8)); }
+}
+
+.login-title {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: normal;
+  color: var(--gold-1);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+
+.login-subtitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--void);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  outline: none;
+  transition: border-color var(--transition);
+  letter-spacing: 1px;
+}
+
+.input-field:focus {
+  border-color: var(--gold-1);
+}
+
+.input-field::placeholder {
+  color: var(--text-dim);
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--gold-1);
+  color: #000;
+}
+
+.btn-primary:hover {
+  background: #fff;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--gold-1);
+  color: var(--gold-1);
+}
+
+.divider {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  position: relative;
+  margin: 4px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: var(--border);
+}
+
+.divider::before { left: 0; }
+.divider::after  { right: 0; }
+
+.btn-google {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-google:hover {
+  border-color: var(--text-dim);
+}
+
+.login-error {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--danger);
+  text-align: center;
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+.login-error.hidden { display: none; }
+
+/* =====================
+   MENU PAGE
+===================== */
+#menuPage {
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.menu-bg {
+  position: fixed;
+  inset: 0;
+  transition: background var(--transition);
+  z-index: 0;
+}
+
+/* Fase 1: Warm gold radial */
+.menu-bg.phase-1 {
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 40%, rgba(255, 215, 0, 0.08) 0%, transparent 70%),
+    var(--void);
+}
+
+/* Fase 2: Dimmer, slight green tint */
+.menu-bg.phase-2 {
+  background:
+    radial-gradient(ellipse 50% 50% at 50% 40%, rgba(180, 160, 0, 0.06) 0%, transparent 70%),
+    var(--void);
+}
+
+/* Fase 3: Dark amber */
+.menu-bg.phase-3 {
+  background:
+    radial-gradient(ellipse 40% 40% at 50% 35%, rgba(100, 70, 0, 0.12) 0%, transparent 70%),
+    var(--void);
+}
+
+/* Fase 4: Almost fully dark, faint red edge */
+.menu-bg.phase-4 {
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 50%, rgba(80, 0, 0, 0.15) 0%, transparent 80%),
+    var(--void);
+}
+
+.menu-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  padding: 32px;
+}
+
+.menu-verity {
+  font-size: 72px;
+  filter: drop-shadow(0 0 24px rgba(255, 215, 0, 0.3));
+  animation: pulse-logo 4s ease-in-out infinite;
+}
+
+#menuPage .menu-container h2 {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: normal;
+  color: var(--gold-1);
+  letter-spacing: 4px;
+}
+
+#menuPage .menu-container p {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+#menuPage .btn-primary {
+  max-width: 220px;
+  letter-spacing: 4px;
+}
+
+/* =====================
+   CHAT PAGE
+===================== */
+#chatPage {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0;
+}
+
+#chatPage.hidden { display: none; }
+
+/* --- Verity 3D container (kiri, 72%) --- */
+.verity-container {
+  position: relative;
+  flex: 0 0 72%;
+  height: 100vh;
+  background: var(--void);
+  overflow: hidden;
+}
+
+#verity3d {
+  width: 100%;
+  height: 100%;
+}
+
+/* Map overlay (fase 3-4) */
+.map-overlay {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  width: 220px;
+  border: 1px solid var(--gold-3);
+  background: #000;
+  opacity: 0.85;
+  animation: flicker 0.1s infinite;
+}
+
+.map-overlay img {
+  width: 100%;
+  display: block;
+  filter: sepia(1) hue-rotate(20deg) saturate(0.6);
+}
+
+.map-overlay.hidden { display: none; }
+
+/* --- Chat Panel (kanan, 28%) --- */
+.chat-panel {
+  flex: 0 0 28%;
+  height: 100vh;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.chat-title {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--gold-1);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.phase-indicator {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+  transition: color 0.2s;
+}
+
+.logout-btn:hover {
+  color: var(--danger);
+}
+
+/* Chat history */
+.chat-history {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.chat-history::-webkit-scrollbar { width: 4px; }
+.chat-history::-webkit-scrollbar-track { background: transparent; }
+.chat-history::-webkit-scrollbar-thumb { background: var(--border); }
+
+.chat-message {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.55;
+  padding: 10px 13px;
+  max-width: 90%;
+  word-break: break-word;
+  animation: msg-in 0.2s ease;
+}
+
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.chat-message.user {
+  align-self: flex-end;
+  background: var(--border);
+  color: var(--text);
+  border-radius: 0;
+  border-left: 2px solid var(--gold-1);
+}
+
+.chat-message.verity {
+  align-self: flex-start;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.chat-message.verity::before {
+  content: 'V';
+  position: absolute;
+  top: 10px;
+  left: -22px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--phase-color);
+}
+
+/* Fase 4 message style */
+.chat-message.verity.phase-4 {
+  color: var(--text-dim);
+  border-color: #1a0000;
+  animation: msg-in 0.2s ease, glitch-text 4s infinite;
+}
+
+@keyframes glitch-text {
+  0%, 95%, 100% { transform: none; opacity: 1; }
+  96%           { transform: translateX(-2px); opacity: 0.8; }
+  97%           { transform: translateX(2px); opacity: 0.9; }
+  98%           { transform: translateX(-1px); }
+}
+
+/* Chat input */
+.chat-input-area {
+  display: flex;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+#chatInput {
+  flex: 1;
+  padding: 14px 14px;
+  background: var(--void);
+  border: none;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  outline: none;
+  letter-spacing: 1px;
+}
+
+#chatInput::placeholder {
+  color: var(--text-dim);
+}
+
+.send-btn {
+  padding: 0 18px;
+  background: none;
+  border: none;
+  border-left: 1px solid var(--border);
+  color: var(--gold-1);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.send-btn:hover {
+  background: rgba(255, 215, 0, 0.08);
+}
+
+/* =====================
+   GLITCH OVERLAY (fase 4)
+===================== */
+.glitch-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 0, 0, 0.015) 3px,
+      rgba(255, 0, 0, 0.015) 4px
+    );
+  animation: glitch-overlay-anim 0.08s infinite;
+}
+
+.glitch-overlay.hidden { display: none; }
+
+@keyframes glitch-overlay-anim {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.6; }
+  75%  { opacity: 0.9; transform: translateX(-1px); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* =====================
+   CALL UI
+===================== */
+.call-ui {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 8, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.call-ui.hidden { display: none; }
+
+.call-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.call-avatar {
+  font-size: 80px;
+  animation: call-ring 1s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+}
+
+@keyframes call-ring {
+  0%, 100% { transform: rotate(-8deg) scale(1); }
+  50%       { transform: rotate(8deg) scale(1.05); }
+}
+
+.call-name {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  color: var(--gold-1);
+  letter-spacing: 5px;
+}
+
+.call-subtitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 3px;
+  animation: blink 1.2s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.call-buttons {
+  display: flex;
+  gap: 40px;
+  margin-top: 24px;
+}
+
+.call-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.call-btn.accept {
+  background: #1a7a1a;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(26, 122, 26, 0.5);
+}
+
+.call-btn.accept:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(26, 122, 26, 0.8);
+}
+
+.call-btn.decline {
+  background: var(--danger);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255, 59, 59, 0.4);
+}
+
+.call-btn.decline:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(255, 59, 59, 0.7);
+}
+
+/* =====================
+   SCANLINE — global subtle
+===================== */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.06) 3px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* =====================
+   FLICKER utility
+===================== */
+@keyframes flicker {
+  0%, 100% { opacity: 0.85; }
+  92%       { opacity: 0.75; }
+  94%       { opacity: 0.9; }
+  96%       { opacity: 0.7; }
+}
+
+/* =====================
+   REDUCED MOTION
+===================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* =====================
+   MOBILE
+===================== */
+@media (max-width: 768px) {
+  #chatPage {
+    flex-direction: column;
+  }
+
+  .verity-container {
+    flex: 0 0 55vh;
+    width: 100%;
+  }
+
+  .chat-panel {
+    flex: 1;
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .map-overlay {
+    width: 140px;
+    bottom: 12px;
+    left: 12px;
+  }
+
+  .login-container {
+    margin: 16px;
+    padding: 32px 24px;
+  }
+}
